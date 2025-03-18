@@ -1,5 +1,6 @@
 if(USE_CUDA)
   add_library(src
+    tcpipserver.cpp
     camerainterface.hpp
     recordinginterface.hpp
     baserecorder.cpp
@@ -105,6 +106,7 @@ if(USE_CUDA)
 target_link_libraries(src
   Qt::Widgets
   Qt::Core
+  Qt::Network
   Qt::SerialPort
   Flir_Spinnaker
   ${OpenCV_LIBS}
@@ -115,6 +117,7 @@ else()
     Qt::Widgets
     Qt::Core
     Qt::SerialPort
+    Qt::Network
     Flir_Spinnaker
     ${OpenCV_LIBS}
   )
