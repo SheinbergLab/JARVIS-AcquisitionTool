@@ -47,7 +47,7 @@ message(STATUS "VERSION_STRING " ${VERSION_STRING})
 
 
 set (CMAKE_PREFIX_PATH "libs/Qt/qt_install/lib/cmake/")
-find_package(Qt6  QUIET PATHS "libs/Qt/qt_install/lib/cmake/" REQUIRED COMPONENTS Core Widgets Charts SerialPort)
+find_package(Qt6  QUIET PATHS "libs/Qt/qt_install/lib/cmake/" REQUIRED COMPONENTS Core Widgets Charts SerialPort Network)
 
 add_definitions("-DQT_DEBUG")
 
@@ -113,6 +113,7 @@ target_include_directories( ${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   Qt::Widgets
   Qt::Charts
+  Qt::Network
   gui
   src
   darkstyle
