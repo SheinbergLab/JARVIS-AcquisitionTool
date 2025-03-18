@@ -297,7 +297,7 @@ void ControlBar::stopClickedSlot() {
     recordingTimeLabel->setText(recordingTime->toString("mm:ss:zzz"));
 }
 
-void ControlBar::AquisitionStoppedSlot() {
+void ControlBar::AcquisitionStoppedSlot() {
     foreach (QMetaObject::Connection connection, this->metawriterConnects) {
         disconnect(connection);
     }
@@ -357,8 +357,8 @@ void ControlBar::camAddedSlot(CameraInterface *cam) {
             &CameraInterface::startAcquisitionSlot);
     connect(this, &ControlBar::stopAcquisition, cam,
             &CameraInterface::stopAcquisitionSlot);
-    connect(cam, &CameraInterface::AquisitionStopped, this,
-            &ControlBar::AquisitionStoppedSlot);
+    connect(cam, &CameraInterface::AcquisitionStopped, this,
+            &ControlBar::AcquisitionStoppedSlot);
 }
 
 void ControlBar::camVisibilityToggledSlot(CameraInterface *cam, bool toggled) {

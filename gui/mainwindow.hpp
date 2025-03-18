@@ -22,6 +22,12 @@ class MainWindow : public QMainWindow {
     explicit MainWindow(QMainWindow *parent = nullptr);
 
   void setMode(int id) { modesWidget->setCurrentIndex(id); }
+  void setFilename(QString filename) {
+    acquisitionMode->setRecordingFilename(filename);
+  }
+  void setRunMode(ControlBar::Mode mode) {
+    acquisitionMode->setRunMode(mode);
+  }
   
   private:
     void closeEvent(QCloseEvent *event);

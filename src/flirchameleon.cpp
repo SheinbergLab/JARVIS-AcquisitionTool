@@ -438,7 +438,7 @@ void FLIRChameleon::stopAcquisitionSlot() {
     }
     m_isStreaming = false;
 
-    emit AquisitionStopped();
+    emit AcquisitionStopped();
 }
 
 void FLIRChameleon::createSettings() {

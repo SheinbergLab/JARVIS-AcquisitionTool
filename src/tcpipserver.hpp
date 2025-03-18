@@ -5,7 +5,6 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QList>
 #include <QMap>
 #include <QDebug>
 
@@ -15,6 +14,8 @@ class TcpipServer : public QObject
 
 public:
   explicit TcpipServer(QObject *parent = nullptr);
+  ~TcpipServer();
+  
   bool start(int port = 1234);
   void stop();
   bool isRunning() const;

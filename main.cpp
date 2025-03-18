@@ -19,6 +19,7 @@
 #include <QImage>
 #include <QSettings>
 #include <QSplashScreen>
+#include <QRegularExpression>
 #include <QDebug>
 #include <iostream>
 
@@ -26,6 +27,7 @@
 
 Q_DECLARE_METATYPE(QList<int>)
 Q_DECLARE_METATYPE(statusType)
+
 
 // called when a TCP/IP message is received
 void handleMessage(TcpipServer *server,
@@ -36,12 +38,36 @@ void handleMessage(TcpipServer *server,
 
   qDebug() << "Processing message from" << clientAddress << "ID:" << clientId;
 
-  // test by toggle main tab
-  static int tab_id = 0;
-  tab_id = !tab_id;
-  m_window->setMode(tab_id);
+  // input should be "command arg1 arg2 arg3";
+  QString input = message; 
+  input.remove(QRegularExpression("[\r\n]"));
 
-  QByteArray response = "Processed: " + message.toUpper();
+  QStringList tokens = input.split(' ', Qt::SkipEmptyParts);
+
+  if (tokens.isEmpty()) {
+    return;
+  }
+
+  QByteArray response = "0\n";
+  QString command = tokens[0]; // The command
+  QStringList arguments = tokens.mid(1); // The arguments
+
+  if (command == "setFilename") {
+    if (arguments.count() > 0) {
+      m_window->setFilename(arguments[0]);
+    }
+    response = "1\n";
+  }
+
+  else if (command == "setRunMode") {
+    if (arguments.count() > 0) {
+      bool ok; // To check if the conversion is successful
+      int mode = arguments[0].toInt(&ok); // Convert to int
+      if (ok) {
+	m_window->setRunMode(static_cast<ControlBar::Mode>(mode));
+      }
+    }
+  }
   
   server->sendResponse(clientId, response);    
 }

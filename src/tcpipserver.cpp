@@ -8,6 +8,25 @@ TcpipServer::TcpipServer(QObject *parent) : QObject(parent), m_server(nullptr)
 	  this, &TcpipServer::newConnection);
 }
 
+TcpipServer::~TcpipServer()
+{
+  m_server->close();
+
+  // Close all active client connections and close
+  for (QTcpSocket* clientSocket : m_clients) {
+    if (clientSocket->state() == QAbstractSocket::ConnectedState) {
+      clientSocket->disconnectFromHost(); // Graceful disconnect
+      if (clientSocket->state() != QAbstractSocket::UnconnectedState) {
+	clientSocket->waitForDisconnected(3000); // Wait for disconnection (3 seconds max)
+      }
+    }
+    clientSocket->deleteLater(); // Cleanup
+  }
+  m_clients.clear();
+  
+  delete m_server;
+}
+
 bool TcpipServer::start(int port)
 {
   if (m_server->isListening()) {

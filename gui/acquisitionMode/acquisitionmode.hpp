@@ -27,7 +27,10 @@ class AcquisitionMode : public QMainWindow {
 
   public:
     explicit AcquisitionMode(QMainWindow *parent = nullptr);
-
+  void setRecordingFilename(QString filename) {
+    controlBar->setRecordingFilename(filename);
+  }
+  void setRunMode(ControlBar::Mode mode) { controlBar->setRunMode(mode); }
   public slots:
     void camSelectedSlot(CameraInterface *cam);
     void triggerInstanceChangedSlot();
