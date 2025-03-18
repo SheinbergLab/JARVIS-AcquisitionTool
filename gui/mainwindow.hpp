@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow {
   public:
     explicit MainWindow(QMainWindow *parent = nullptr);
 
+  void setMode(int id) { modesWidget->setCurrentIndex(id); }
+  
   private:
     void closeEvent(QCloseEvent *event);
     MainBar *mainBar;
