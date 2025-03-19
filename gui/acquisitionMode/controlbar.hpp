@@ -42,7 +42,8 @@ public:
       break;
     case Mode::Record:
       recordClickedSlot(1);
-      AcquisitionStoppedSlot();
+      if (!CameraInterface::cameraList.size())
+	AcquisitionStoppedSlot();
       break;
     case Mode::Stop:
       stopClickedSlot();
